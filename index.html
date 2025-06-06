@@ -1,0 +1,1433 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>နမ်ခန္ဓါလေးပါး - Four Mental Aggregates</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ff6b35;
+            --secondary-color: #f7931e;
+            --accent-color: #ffd23f;
+            --text-primary: #2c3e50;
+            --text-secondary: #7f8c8d;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --bg-card: #ffffff;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --gradient-primary: linear-gradient(135deg, #ff6b35, #f7931e);
+            --gradient-secondary: linear-gradient(135deg, #667eea, #764ba2);
+            --gradient-accent: linear-gradient(135deg, #ffd89b, #19547b);
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #ff7b4d;
+            --secondary-color: #ffa726;
+            --accent-color: #ffd54f;
+            --text-primary: #ecf0f1;
+            --text-secondary: #bdc3c7;
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2c2c2c;
+            --bg-card: #333333;
+            --shadow: rgba(255, 255, 255, 0.1);
+            --gradient-primary: linear-gradient(135deg, #ff7b4d, #ffa726);
+            --gradient-secondary: linear-gradient(135deg, #667eea, #764ba2);
+            --gradient-accent: linear-gradient(135deg, #ff9800, #3f51b5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Myanmar3', 'Segoe UI', 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            overflow-x: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .particles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(120deg); }
+            66% { transform: translateY(10px) rotate(240deg); }
+        }
+
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader-content {
+            text-align: center;
+            color: white;
+        }
+
+        .loader-wheel {
+            width: 80px;
+            height: 80px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loader h2 {
+            font-size: 2em;
+            margin-bottom: 10px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 20px var(--shadow);
+        }
+
+        [data-theme="dark"] .navbar {
+            background: rgba(26, 26, 26, 0.95);
+        }
+
+        .navbar.scrolled {
+            padding: 0.5rem 0;
+            background: rgba(255, 255, 255, 0.98);
+        }
+
+        [data-theme="dark"] .navbar.scrolled {
+            background: rgba(26, 26, 26, 0.98);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: bold;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient-shift 3s ease-in-out infinite;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { filter: hue-rotate(0deg); }
+            50% { filter: hue-rotate(45deg); }
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+        }
+
+        .nav-link:hover {
+            background: var(--gradient-primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.3);
+        }
+
+        .theme-toggle {
+            background: var(--gradient-primary);
+            border: none;
+            color: white;
+            padding: 0.7rem;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2em;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1) rotate(180deg);
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+        }
+
+        .sound-toggle {
+            background: var(--gradient-secondary);
+            border: none;
+            color: white;
+            padding: 0.7rem;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2em;
+            margin-left: 1rem;
+        }
+
+        .sound-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .sound-toggle.muted {
+            opacity: 0.5;
+        }
+
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5em;
+            cursor: pointer;
+        }
+
+        .hero {
+            min-height: 100vh;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+            animation: background-shift 10s ease-in-out infinite;
+        }
+
+        @keyframes background-shift {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 2;
+            position: relative;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 4em;
+            margin-bottom: 1rem;
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { text-shadow: 0 0 20px rgba(255, 255, 255, 0.5); }
+            50% { text-shadow: 0 0 40px rgba(255, 255, 255, 0.8), 0 0 60px rgba(255, 255, 255, 0.4); }
+        }
+
+        .hero p {
+            font-size: 1.3em;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            font-weight: bold;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .cta-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .shape {
+            position: absolute;
+            opacity: 0.1;
+            animation: floatShape 15s ease-in-out infinite;
+        }
+
+        .shape:nth-child(1) {
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            top: 20%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .shape:nth-child(3) {
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        @keyframes floatShape {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-30px) rotate(120deg); }
+            66% { transform: translateY(15px) rotate(240deg); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section {
+            padding: 5rem 0;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3em;
+            margin-bottom: 3rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .aggregates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .aggregate-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px var(--shadow);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 107, 53, 0.1);
+        }
+
+        .aggregate-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .aggregate-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px var(--shadow);
+            border-color: var(--primary-color);
+        }
+
+        .card-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2em;
+            color: white;
+            animation: iconPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes iconPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .card-title {
+            font-size: 1.8em;
+            margin-bottom: 1rem;
+            text-align: center;
+            color: var(--text-primary);
+        }
+
+        .card-description {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            text-align: center;
+        }
+
+        .interactive-section {
+            background: var(--bg-secondary);
+            border-radius: 30px;
+            padding: 3rem;
+            margin: 3rem 0;
+            position: relative;
+        }
+
+        .meditation-wheel {
+            width: 300px;
+            height: 300px;
+            margin: 2rem auto;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .wheel-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 100px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2em;
+            z-index: 3;
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+        }
+
+        .wheel-segment {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 20px solid transparent;
+            animation: rotate 20s linear infinite;
+        }
+
+        .wheel-segment:nth-child(1) {
+            border-top-color: var(--primary-color);
+            animation-delay: 0s;
+        }
+
+        .wheel-segment:nth-child(2) {
+            border-right-color: var(--secondary-color);
+            animation-delay: 5s;
+        }
+
+        .wheel-segment:nth-child(3) {
+            border-bottom-color: var(--accent-color);
+            animation-delay: 10s;
+        }
+
+        .wheel-segment:nth-child(4) {
+            border-left-color: var(--primary-color);
+            animation-delay: 15s;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .wheel-label {
+            position: absolute;
+            color: var(--text-primary);
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            background: var(--bg-card);
+            border-radius: 20px;
+            box-shadow: 0 5px 15px var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .wheel-label:hover {
+            transform: scale(1.1);
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .label-1 { top: 10px; left: 50%; transform: translateX(-50%); }
+        .label-2 { right: 10px; top: 50%; transform: translateY(-50%); }
+        .label-3 { bottom: 10px; left: 50%; transform: translateX(-50%); }
+        .label-4 { left: 10px; top: 50%; transform: translateY(-50%); }
+
+        .philosophy-section {
+            background: var(--gradient-accent);
+            color: white;
+            border-radius: 30px;
+            padding: 4rem 2rem;
+            margin: 3rem 0;
+            text-align: center;
+        }
+
+        .philosophy-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .philosophy-text {
+            font-size: 1.2em;
+            line-height: 2;
+            margin-bottom: 2rem;
+        }
+
+        .quote-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-left: 5px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .quote-text {
+            font-style: italic;
+            font-size: 1.1em;
+            margin-bottom: 1rem;
+        }
+
+        .quote-author {
+            font-weight: bold;
+            opacity: 0.8;
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 107, 53, 0.2);
+            z-index: 1001;
+        }
+
+        .scroll-progress {
+            height: 100%;
+            background: var(--gradient-primary);
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+
+        .footer {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 3rem 0 1rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-link {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .social-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px) scale(1.1);
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 1000;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: 0 10px 25px rgba(255, 107, 53, 0.4);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: var(--bg-primary);
+                flex-direction: column;
+                justify-content: start;
+                padding-top: 2rem;
+                transition: left 0.3s ease;
+                box-shadow: 0 5px 15px var(--shadow);
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .mobile-toggle {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.5em;
+            }
+
+            .hero p {
+                font-size: 1.1em;
+            }
+
+            .section-title {
+                font-size: 2.2em;
+            }
+
+            .aggregates-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .meditation-wheel {
+                width: 250px;
+                height: 250px;
+            }
+
+            .wheel-center {
+                width: 80px;
+                height: 80px;
+                font-size: 1.5em;
+            }
+
+            .philosophy-section,
+            .interactive-section {
+                padding: 2rem 1rem;
+                margin: 2rem 0;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2em;
+            }
+
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .card-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5em;
+            }
+
+            .meditation-wheel {
+                width: 200px;
+                height: 200px;
+            }
+
+            .wheel-center {
+                width: 60px;
+                height: 60px;
+                font-size: 1.2em;
+            }
+        }
+
+        /* Touch-friendly improvements */
+        @media (hover: none) and (pointer: coarse) {
+            .nav-link,
+            .cta-button,
+            .social-icon,
+            .aggregate-card {
+                transform: none !important;
+            }
+
+            .nav-link:active,
+            .cta-button:active,
+            .social-icon:active {
+                transform: scale(0.95) !important;
+            }
+        }
+
+        /* Accessibility improvements */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            :root {
+                --shadow: rgba(0, 0, 0, 0.5);
+            }
+
+            .aggregate-card {
+                border: 2px solid var(--primary-color);
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            .navbar,
+            .particles-container,
+            .loader,
+            .back-to-top,
+            .sound-toggle,
+            .theme-toggle {
+                display: none !important;
+            }
+
+            body {
+                color: black !important;
+                background: white !important;
+            }
+
+            .hero,
+            .philosophy-section,
+            .footer {
+                background: white !important;
+                color: black !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loader" id="loader">
+        <div class="loader-content">
+            <div class="loader-wheel"></div>
+            <h2>နမ်ခန္ဓါလေးပါး</h2>
+            <p>Loading Buddhist Wisdom...</p>
+        </div>
+    </div>
+
+    <!-- Particles Background -->
+    <div class="particles-container" id="particles"></div>
+
+    <!-- Scroll Progress -->
+    <div class="scroll-indicator">
+        <div class="scroll-progress" id="scrollProgress"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="logo">☸ နမ်ခန္ဓါ</div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="nav-link">မူလစာမျက်နှာ</a></li>
+                <li><a href="#aggregates" class="nav-link">ခန္ဓါလေးပါး</a></li>
+                <li><a href="#philosophy" class="nav-link">ဒဿန</a></li>
+                <li><a href="#meditation" class="nav-link">တရားထိုင်</a></li>
+                <li><a href="#contact" class="nav-link">ဆက်သွယ်ရန်</a></li>
+            </ul>
+            <div style="display: flex; align-items: center;">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="sound-toggle" id="soundToggle" aria-label="Toggle sound">
+                    <i class="fas fa-volume-up"></i>
+                </button>
+                <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle mobile menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-background"></div>
+        <div class="floating-shapes">
+            <div class="shape">☸</div>
+            <div class="shape">🏺</div>
+            <div class="shape">🧘‍♂️</div>
+        </div>
+        <div class="hero-content">
+            <h1>နမ်ခန္ဓါလေးပါး</h1>
+            <p>Four Mental Aggregates - The Path to Understanding Mind and Reality <br> Created By Kyaw Myo Naing</p>
+            <a href="#aggregates" class="cta-button">
+                <i class="fas fa-arrow-down"></i> Explore Wisdom
+            </a>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Aggregates Section -->
+        <section class="section" id="aggregates">
+            <div class="container">
+                <h2 class="section-title">နမ်ခန္ဓါလေးပါး</h2>
+                <p style="text-align: center; font-size: 1.2em; color: var(--text-secondary); max-width: 800px; margin: 0 auto 3rem;">
+                    ခန္ဓါငါးပါး (ပဉ္စက္ခန္ဓါ) ထဲက ရုပ်ခန္ဓါကလွဲရင် ကျန်တဲ့ နမ်ခန္ဓါ (စိတ်နဲ့ဆိုင်သော အစိတ်အပိုင်း) လေးမျိုးကို ခွဲပြောထားခြင်းဖြစ်ပါတယ်။
+                </p>
+                
+                <div class="aggregates-grid">
+                    <div class="aggregate-card" data-sound="vedana">
+                        <div class="card-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3 class="card-title">ဝေဒနာခန္ဓါ</h3>
+                        <p class="card-description">
+                            ခံစားမှုအားလုံး (သုခ၊ ဒုက္ခ၊ ဥပေက္ခာ)။ ကောင်းမွန်သော ခံစားမှု၊ မကောင်းသော ခံစားမှု၊ နေကောင်းနေရာသော ခံစားမှုများ အားလုံးကို ဆိုလိုပါသည်။
+                        </p>
+                    </div>
+
+                    <div class="aggregate-card" data-sound="sanna">
+                        <div class="card-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <h3 class="card-title">သညာခန္ဓါ</h3>
+                        <p class="card-description">
+                            အမှတ်အသားပြုခြင်း (ဥပမာ - ဒါသည် လူ၊ ဒါသည် အိမ် စသဖြင့် မှတ်မိခြင်း)။ အရာများကို မှတ်သားခြင်း၊ သိမှတ်ခြင်း၊ အမှတ်အသားပြုခြင်းများ ဖြစ်သည်။
+                        </p>
+                    </div>
+
+                    <div class="aggregate-card" data-sound="sankhara">
+                        <div class="card-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <h3 class="card-title">သင်္ခါရခန္ဓါ</h3>
+                        <p class="card-description">
+                            စေ့ဆော်မှု၊ ကံ၊ စိတ်ဖြစ်စဉ်များ (ဥပမာ - ရည်ရွယ်ချက်၊ စိတ်ကူး၊ ဆန္ဒ)။ စိတ်၏ တက်ကြွမှုများ၊ စေ့ဆော်မှုများ၊ ဆန္ဒများ အားလုံးကို ဆိုလိုသည်။
+                        </p>
+                    </div>
+
+                    <div class="aggregate-card" data-sound="vinnana">
+                        <div class="card-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3 class="card-title">ဝိညာဏခန္ဓါ</h3>
+                        <p class="card-description">
+                            အသိစိတ် (အာရုံကိုသိခြင်း၊ သိမှုဖြစ်စဉ်)။ မျက်စိ၊ နား၊ နှာခေါင်း၊ လျှာ၊ ကိုယ်၊ စိတ်တို့၏ အသိစိတ်များ အားလုံးကို ဆိုလိုပါသည်။
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Meditation Wheel -->
+        <section class="section" id="meditation">
+            <div class="container">
+                <div class="interactive-section">
+                    <h2 style="text-align: center; margin-bottom: 2rem; color: var(--text-primary);">တရားထိုင် လှည့်ပတ်စက်ဝိုင်း</h2>
+                    <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem;">
+                        အလယ်ရှိ ပုံသေ့ကို နှိပ်ပြီး တရားထိုင်မှု ကို စတင်လိုက်ပါ
+                    </p>
+                    
+                    <div class="meditation-wheel" id="meditationWheel">
+                        <div class="wheel-segment"></div>
+                        <div class="wheel-segment"></div>
+                        <div class="wheel-segment"></div>
+                        <div class="wheel-segment"></div>
+                        <div class="wheel-center" id="wheelCenter">
+                            <i class="fas fa-om"></i>
+                        </div>
+                        <div class="wheel-label label-1">ဝေဒနာ</div>
+                        <div class="wheel-label label-2">သညာ</div>
+                        <div class="wheel-label label-3">သင်္ခါရ</div>
+                        <div class="wheel-label label-4">ဝိညာဏ</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Philosophy Section -->
+        <section class="section philosophy-section" id="philosophy">
+            <div class="philosophy-content">
+                <h2 style="margin-bottom: 2rem;">ရုပ်ခန္ဓါနှင့် ကွဲပြားခြင်း</h2>
+                <div class="philosophy-text">
+                    <strong>ရုပ်ခန္ဓါ</strong> (ရူပက္ခန္ဓါ) သည် ခန္ဓါကိုယ်၊ ရုပ်ပိုင်းဆိုင်ရာ အစိတ်အပိုင်းများဖြစ်ပြီး <strong>နမ်ခန္ဓါလေးပါး</strong> သည် စိတ်နှင့်သက်ဆိုင်သော တရားများဖြစ်သည်။
+                </div>
+                
+                <div class="quote-section">
+                    <div class="quote-text">
+                        "ဗုဒ္ဓဘာသာတွင် ဤခန္ဓါများကို သိမြင်ခြင်းဖြင့် 'ငါ' ဆိုသော အယူအဆ (အတ္တ) မှားယွင်းကြောင်း နားလည်နိုင်ပါသည်။"
+                    </div>
+                    <div class="quote-author">- ဗုဒ္ဓ အဘိဓမ္မ</div>
+                </div>
+
+                <div class="philosophy-text">
+                    ဝိပဿနာတွင်အထူးအရေးပါပြီး၊ ခန္ဓါငါးပါးကို သိမြင်အောင် ကမ္မဋ္ဌာန်းစီးဖြန်းရာတွင် အသုံးပြုပါသည်။ "နမ်ရုပ်" ကို ပိုင်းခြားသိမြင်ရန် အထောက်အကူဖြစ်စေပါသည်။
+                </div>
+
+                <div class="philosophy-text">
+                    ဒီနမ်ခန္ဓါလေးပါးကို နက်နက်နဲနဲ လေ့လာခြင်းဖြင့် သစ္စာလေးပါးကို ပိုမိုနားလည်လာနိုင်ပါတယ်။
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#home" class="footer-link">မူလစာမျက်နှာ</a>
+                <a href="#aggregates" class="footer-link">ခန္ဓါလေးပါး</a>
+                <a href="#philosophy" class="footer-link">ဒဿန</a>
+                <a href="#meditation" class="footer-link">တရားထိုင်</a>
+            </div>
+            
+            <div class="social-icons">
+                <a href="#" class="social-icon" aria-label="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" class="social-icon" aria-label="Twitter">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#" class="social-icon" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#" class="social-icon" aria-label="YouTube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+            </div>
+            
+            <p style="margin-top: 2rem; opacity: 0.8;">
+                © 2025 နမ်ခန္ဓါလေးပါး - Buddhist Philosophy Website. 
+                <br>Built with wisdom, love, and modern technology.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <a href="#home" class="back-to-top" id="backToTop" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <script>
+        // Audio Context for Sound Effects
+        let audioContext;
+        let soundEnabled = true;
+
+        // Initialize Audio Context
+        function initAudio() {
+            try {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            } catch (error) {
+                console.log('Web Audio API not supported');
+            }
+        }
+
+        // Create Sound Effect
+        function playSound(frequency = 440, duration = 200, type = 'sine') {
+            if (!soundEnabled || !audioContext) return;
+
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+
+            oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+            oscillator.type = type;
+
+            gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration / 1000);
+
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + duration / 1000);
+        }
+
+        // Aggregate-specific sounds
+        const aggregateSounds = {
+            vedana: () => playSound(528, 300, 'sine'), // Heart frequency
+            sanna: () => playSound(741, 250, 'triangle'), // Eye/perception
+            sankhara: () => playSound(396, 400, 'square'), // Formation
+            vinnana: () => playSound(852, 350, 'sawtooth') // Consciousness
+        };
+
+        // Create Particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const particleCount = window.innerWidth < 768 ? 30 : 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 4 + 4) + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        // Scroll Progress
+        function updateScrollProgress() {
+            const scrolled = (window.pageYOffset / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            document.getElementById('scrollProgress').style.width = scrolled + '%';
+        }
+
+        // Navbar Scroll Effect
+        function handleNavbarScroll() {
+            const navbar = document.getElementById('navbar');
+            if (window.pageYOffset > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        }
+
+        // Back to Top Visibility
+        function handleBackToTop() {
+            const backToTop = document.getElementById('backToTop');
+            if (window.pageYOffset > 500) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        }
+
+        // Smooth Scroll
+        function smoothScroll(target) {
+            const element = document.querySelector(target);
+            if (element) {
+                const offset = 80; // Navbar height
+                const elementPosition = element.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        // Theme Toggle
+        function toggleTheme() {
+            const body = document.body;
+            const themeToggle = document.getElementById('themeToggle');
+            const icon = themeToggle.querySelector('i');
+            
+            if (body.dataset.theme === 'dark') {
+                body.dataset.theme = 'light';
+                icon.className = 'fas fa-moon';
+                playSound(660, 200);
+            } else {
+                body.dataset.theme = 'dark';
+                icon.className = 'fas fa-sun';
+                playSound(440, 200);
+            }
+            
+            localStorage.setItem('theme', body.dataset.theme);
+        }
+
+        // Sound Toggle
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const soundToggle = document.getElementById('soundToggle');
+            const icon = soundToggle.querySelector('i');
+            
+            if (soundEnabled) {
+                icon.className = 'fas fa-volume-up';
+                soundToggle.classList.remove('muted');
+                playSound(880, 150);
+            } else {
+                icon.className = 'fas fa-volume-mute';
+                soundToggle.classList.add('muted');
+            }
+            
+            localStorage.setItem('soundEnabled', soundEnabled);
+        }
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const navMenu = document.getElementById('navMenu');
+            const mobileToggle = document.getElementById('mobileToggle');
+            const icon = mobileToggle.querySelector('i');
+            
+            navMenu.classList.toggle('active');
+            
+            if (navMenu.classList.contains('active')) {
+                icon.className = 'fas fa-times';
+                playSound(523, 150);
+            } else {
+                icon.className = 'fas fa-bars';
+                playSound(392, 150);
+            }
+        }
+
+        // Meditation Wheel Interaction
+        function initMeditationWheel() {
+            const wheel = document.getElementById('meditationWheel');
+            const center = document.getElementById('wheelCenter');
+            let isSpinning = false;
+
+            center.addEventListener('click', () => {
+                if (!isSpinning) {
+                    isSpinning = true;
+                    wheel.style.animation = 'none';
+                    wheel.offsetHeight; // Trigger reflow
+                    wheel.style.animation = 'rotate 3s ease-in-out';
+                    
+                    // Play meditation sound sequence
+                    playSound(256, 300);
+                    setTimeout(() => playSound(341, 300), 300);
+                    setTimeout(() => playSound(427, 300), 600);
+                    setTimeout(() => playSound(512, 500), 900);
+                    
+                    setTimeout(() => {
+                        isSpinning = false;
+                        wheel.style.animation = '';
+                    }, 3000);
+                }
+            });
+
+            // Hover effects for wheel labels
+            document.querySelectorAll('.wheel-label').forEach(label => {
+                label.addEventListener('mouseenter', () => {
+                    playSound(350, 100);
+                });
+            });
+        }
+
+        // Card Hover Sound Effects
+        function initCardSounds() {
+            document.querySelectorAll('.aggregate-card').forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    const soundType = card.dataset.sound;
+                    if (aggregateSounds[soundType]) {
+                        aggregateSounds[soundType]();
+                    }
+                });
+            });
+        }
+
+        // Intersection Observer for Animations
+        function initIntersectionObserver() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                        
+                        // Play sound for section entrance
+                        if (entry.target.classList.contains('aggregate-card')) {
+                            setTimeout(() => {
+                                const soundType = entry.target.dataset.sound;
+                                if (aggregateSounds[soundType]) {
+                                    aggregateSounds[soundType]();
+                                }
+                            }, 300);
+                        }
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            // Observe cards
+            document.querySelectorAll('.aggregate-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(50px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+        }
+
+        // Keyboard Navigation
+        function initKeyboardNavigation() {
+            document.addEventListener('keydown', (e) => {
+                switch(e.key) {
+                    case 'Escape':
+                        // Close mobile menu if open
+                        const navMenu = document.getElementById('navMenu');
+                        if (navMenu.classList.contains('active')) {
+                            toggleMobileMenu();
+                        }
+                        break;
+                    case 't':
+                    case 'T':
+                        if (e.ctrlKey || e.metaKey) {
+                            e.preventDefault();
+                            toggleTheme();
+                        }
+                        break;
+                    case 'm':
+                    case 'M':
+                        if (e.ctrlKey || e.metaKey) {
+                            e.preventDefault();
+                            toggleSound();
+                        }
+                        break;
+                }
+            });
+        }
+
+        // Loading Screen
+        function hideLoader() {
+            setTimeout(() => {
+                const loader = document.getElementById('loader');
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                }, 500);
+            }, 1500);
+        }
+
+        // Initialize Everything
+        function init() {
+            // Audio
+            initAudio();
+            
+            // Visual elements
+            createParticles();
+            initMeditationWheel();
+            initCardSounds();
+            initIntersectionObserver();
+            initKeyboardNavigation();
+            
+            // Load saved preferences
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                document.body.dataset.theme = savedTheme;
+                const icon = document.querySelector('#themeToggle i');
+                icon.className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+            }
+            
+            const savedSound = localStorage.getItem('soundEnabled');
+            if (savedSound !== null) {
+                soundEnabled = savedSound === 'true';
+                const soundToggle = document.getElementById('soundToggle');
+                const icon = soundToggle.querySelector('i');
+                if (!soundEnabled) {
+                    icon.className = 'fas fa-volume-mute';
+                    soundToggle.classList.add('muted');
+                }
+            }
+            
+            // Event listeners
+            window.addEventListener('scroll', () => {
+                updateScrollProgress();
+                handleNavbarScroll();
+                handleBackToTop();
+            });
+            
+            window.addEventListener('resize', () => {
+                // Recreate particles on resize
+                const container = document.getElementById('particles');
+                container.innerHTML = '';
+                createParticles();
+            });
+            
+            // Navigation
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = this.getAttribute('href');
+                    smoothScroll(target);
+                    playSound(220, 100);
+                    
+                    // Close mobile menu if open
+                    const navMenu = document.getElementById('navMenu');
+                    if (navMenu.classList.contains('active')) {
+                        toggleMobileMenu();
+                    }
+                });
+            });
+            
+            // Button event listeners
+            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+            document.getElementById('soundToggle').addEventListener('click', toggleSound);
+            document.getElementById('mobileToggle').addEventListener('click', toggleMobileMenu);
+            
+            // Hide loader
+            hideLoader();
+            
+            // Welcome sound
+            setTimeout(() => {
+                if (soundEnabled) {
+                    playSound(523, 300);
+                    setTimeout(() => playSound(659, 300), 300);
+                    setTimeout(() => playSound(784, 400), 600);
+                }
+            }, 2000);
+        }
+
+        // Start when DOM is loaded
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+
+        // Performance optimization
+        let ticking = false;
+        function requestTick() {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    updateScrollProgress();
+                    handleNavbarScroll();
+                    handleBackToTop();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }
+
+        window.addEventListener('scroll', requestTick, { passive: true });
+
+        // Service Worker for Caching (optional)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(() => console.log('SW registered'))
+                    .catch(() => console.log('SW registration failed'));
+            });
+        }
+    </script>
+</body>
+</html>
